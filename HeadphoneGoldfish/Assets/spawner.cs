@@ -24,8 +24,7 @@ public class spawner : MonoBehaviour {
 
     void spawn()
     {
-        Transform seg = GameObject.Instantiate(segment);
-        seg.SetParent(transform);
+        Transform seg = GameObject.Instantiate(segment, transform, false);
         last_spawn_time = Time.time;
     }
 
