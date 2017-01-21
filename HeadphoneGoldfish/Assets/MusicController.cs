@@ -15,6 +15,11 @@ public class MusicController : MonoBehaviour {
         mx.start();
     }
 
+    private void OnDestroy()
+    {
+        mx.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
     // Update is called once per frame
     void Update()
     {
