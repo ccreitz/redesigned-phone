@@ -63,7 +63,7 @@ public class WaveDetector : MonoBehaviour
             }
             elapsed = 0;
         }
-        //Debug.Log(state.ToString() + speed);
+        // Debug.Log(state.ToString() + speed);
         if (dx > threshold)
         {
             //tail right
@@ -105,7 +105,8 @@ public class WaveDetector : MonoBehaviour
             sum += t;
         }
         float average = sum / memsize;
-        // Debug.Log(average);
+        Debug.Log(average.ToString("F2"));
+
         for (int i = 0; i < buckets.Length; i++)
         {
             if (average <= buckets[i])
