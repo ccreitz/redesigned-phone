@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{884e88fe-ca28-4f35-9458-899f5ea53a3a}">
+        <property name="assetPath">
+            <value>Slow3_test.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>8</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{99bd6b42-d381-40af-a07f-80ea3f21c3c4}</destination>
+        </relationship>
+    </object>
+</objects>
