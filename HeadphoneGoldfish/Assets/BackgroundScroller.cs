@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BackgroundScroller : MonoBehaviour {
     public GameObject spriteObjTemplate;
-    public float scrollSpeed;
+    public float scroll_speed_default;
+    public float parallaxSpeed;
 
     private float worldScreenWidth;
     private float worldScreenHeight;
@@ -52,7 +53,7 @@ public class BackgroundScroller : MonoBehaviour {
             {
                 continue;
             }
-            child.position += new Vector3(-scrollSpeed, 0.0f, 0.0f) * Time.deltaTime;
+            child.position += new Vector3(parallaxSpeed * (scroll_speed_default - WaveDetector.Instance.Speed), 0.0f, 0.0f) * Time.deltaTime;
         }
     }
 }
