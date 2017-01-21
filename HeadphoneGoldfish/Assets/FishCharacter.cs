@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FishCharacter : MonoBehaviour {
     public float invTime;
+    public Color invColor;
     private float lastInv;
 
     // Use this for initialization
@@ -13,7 +14,7 @@ public class FishCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GetComponent<SpriteRenderer>().color = isInv() ? Color.red : Color.white;
+        GetComponent<SpriteRenderer>().color = isInv() ? invColor : Color.white;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
