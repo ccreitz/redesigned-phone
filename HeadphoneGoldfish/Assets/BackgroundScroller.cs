@@ -57,7 +57,7 @@ public class BackgroundScroller : MonoBehaviour {
 
     void SpawnBackground(float xPos)
     {
-        GameObject newObj = Instantiate<GameObject>(spriteObjTemplate, new Vector3(xPos, 0.0f, 10.0f), new Quaternion(), transform);
+        GameObject newObj = Instantiate<GameObject>(spriteObjTemplate, new Vector3(xPos, transform.position.y, transform.position.z), new Quaternion(), transform);
         newObj.GetComponent<SpriteRenderer>().sprite = sprites[lastSpriteIndex];
         lastSpriteIndex++;
         if (lastSpriteIndex >= sprites.Length)
