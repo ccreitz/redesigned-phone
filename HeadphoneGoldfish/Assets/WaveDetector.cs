@@ -12,11 +12,12 @@ public class WaveDetector : MonoBehaviour
     public int memsize;
     public float[] buckets = new float[] { };
     private int speed;
+    public float speedDecayTime;
 
     // Use this for initialization
     void Start()
     {
-        //Debug.Log("buckets " + buckets.Length);
+        Debug.Log("buckets " + buckets.Length);
     }
 
     public int Speed
@@ -29,10 +30,22 @@ public class WaveDetector : MonoBehaviour
         get { return state; }
     }
     // Update is called once per frame
+    void OnGUI()
+    {
+        var myLog = GUI.TextArea(new Rect(10, 10, 50, 20), speed + " " + state.ToString());
+    }
     void Update()
     {
         float dx = Input.GetAxis("Mouse X");
         elapsed += Time.deltaTime;
+        if (elapsed > speedDecayTime)
+        {
+            if (speed > 0)
+            {
+                speed--;
+            }
+            elapsed = 0;
+        }
         //Debug.Log(state.ToString() + speed);
         if (dx > threshold)
         {
@@ -75,7 +88,7 @@ public class WaveDetector : MonoBehaviour
             sum += t;
         }
         float average = sum / memsize;
-        //Debug.Log(average);
+        // Debug.Log(average);
         for (int i = 0; i < buckets.Length; i++)
         {
             if (average <= buckets[i])
