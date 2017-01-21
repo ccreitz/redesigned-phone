@@ -19,7 +19,19 @@ public class FishCharacter : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        lastInv = Time.time;
+        if (collision.gameObject.CompareTag("Damaging"))
+        {
+            lastInv = Time.time;
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().Damaged();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Scoring"))
+        {
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().AddScore();
+        }
     }
 
     private bool isInv()
