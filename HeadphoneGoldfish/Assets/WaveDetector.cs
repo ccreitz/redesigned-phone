@@ -14,6 +14,9 @@ public class WaveDetector : MonoBehaviour
     private int speed;
     public float speedDecayTime;
     private static WaveDetector instance;
+
+    public float speedFactor;
+
     private void Awake()
     {
         if (instance == null)
@@ -105,7 +108,9 @@ public class WaveDetector : MonoBehaviour
             sum += t;
         }
         float average = sum / memsize;
-        Debug.Log(average.ToString("F2"));
+        //Debug.Log(average.ToString("F2"));
+
+        //  speedometer.text = average.ToString("F2");
 
         for (int i = 0; i < buckets.Length; i++)
         {
