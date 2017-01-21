@@ -66,7 +66,7 @@ public class WaveDetector : MonoBehaviour
             }
             elapsed = 0;
         }
-        // Debug.Log(state.ToString() + speed);
+        //Debug.Log(dx.ToString("F2") + " Threshold = " + threshold);
         if (dx > threshold)
         {
             //tail right
@@ -77,6 +77,8 @@ public class WaveDetector : MonoBehaviour
             else if (state == Tailstate.Left || state == Tailstate.None)
             {
                 state = Tailstate.Right;
+                Tailbeat(elapsed);
+                elapsed = 0;
             }
         }
         else if (dx < -threshold)
@@ -105,25 +107,35 @@ public class WaveDetector : MonoBehaviour
         float sum = 0F;
         foreach(float t in buff)
         {
+            //Debug.Log(t);
             sum += t;
         }
         float average = sum / memsize;
-        //Debug.Log(average.ToString("F2"));
+        //Debug.Log("Average = " + average.ToString("F2") + " Sum = " + sum.ToString("F2") + " Memsize = " + memsize);
 
-        //  speedometer.text = average.ToString("F2");
+        speed = quantizeByBucket(average);
+        average = 0;
+    }
 
-        for (int i = 0; i < buckets.Length; i++)
+    private int quantizeByBucket(float x)
+    {
+        int retval = 0;
+        if (x > buckets[buckets.Length - 1])
         {
-            if (average <= buckets[i])
+            retval = 0;
+        }
+        else
+        {
+            for (int i = 0; i < buckets.Length; i++)
             {
-                speed = buckets.Length - i;
-                break;
+                if (x <= buckets[i])
+                {
+                    retval = buckets.Length - i;
+                    break;
+                }
             }
         }
-        if (average > buckets[buckets.Length - 1])
-        {
-            speed = 0;
-        }
-        average = 0;
+        Debug.Log("x = " + x.ToString("F2") + " Retval = " + retval);
+        return retval;
     }
 }
