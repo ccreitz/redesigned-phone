@@ -18,7 +18,7 @@ public class spawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        scroll_speed = scroll_speed_default - WaveDetector.Instance.Speed;
+        scroll_speed = scroll_speed_default - (WaveDetector.Instance.speedFactor * WaveDetector.Instance.Speed);
         float elapsed = (Time.time - last_spawn_time);
         if (elapsed > time_between_spawn/-scroll_speed) {
             spawn();
