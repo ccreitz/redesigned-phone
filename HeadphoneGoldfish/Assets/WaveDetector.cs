@@ -13,11 +13,28 @@ public class WaveDetector : MonoBehaviour
     public float[] buckets = new float[] { };
     private int speed;
     public float speedDecayTime;
-
-    // Use this for initialization
-    void Start()
+    private static WaveDetector instance;
+    private void Awake()
     {
-        Debug.Log("buckets " + buckets.Length);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+        // Use this for initialization
+        void Start()
+    {
+       // Debug.Log("buckets " + buckets.Length);
+    }
+
+    public static WaveDetector Instance
+    {
+        get { return instance; }
     }
 
     public int Speed
