@@ -7,6 +7,7 @@ public class FishGameController : MonoBehaviour {
     public int score;
     public UnityEngine.UI.Text livesCounter;
     public UnityEngine.UI.Text scoreCounter;
+    public Transform gameOverStuff;
 
     void Start () {
         UpdateUI();
@@ -38,6 +39,11 @@ public class FishGameController : MonoBehaviour {
     {
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
         WaveDetector.Instance.gameObject.SetActive(false);
+        gameOverStuff.gameObject.SetActive(true);
+        if (score > PlayerPrefs.GetInt("score", 0))
+        {
+            PlayerPrefs.SetInt("score", score);
+        }
     }
 
     void UpdateUI()
