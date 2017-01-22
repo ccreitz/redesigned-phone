@@ -51,7 +51,7 @@ public class MusicController : MonoBehaviour
 
     private void OnGUI()
     {
-        var myLog = GUI.TextArea(new Rect(50, 10, 50, 20), WaveDetector.Instance.Smoothspeed.ToString("F2"));
+        //var myLog = GUI.TextArea(new Rect(50, 10, 50, 20), WaveDetector.Instance.Smoothspeed.ToString("F2"));
     }
 
     private void OnEnable()
@@ -114,6 +114,7 @@ public class MusicController : MonoBehaviour
                 lastBeatTime = -1000;
                 lastClickTime = -1000;
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().AddMult();
+                GameObject.FindGameObjectWithTag("Spawner").GetComponent<spawner>().BumpDifficulty();
                 break;
             }
         }
