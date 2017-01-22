@@ -7,6 +7,7 @@ public class spawner : MonoBehaviour {
     public float time_between_spawn;
     public float scroll_speed_default;
     public List<Transform> segments;
+    public float difficulty_change;
     private float scroll_speed;
 
     private float last_spawn_time;
@@ -15,6 +16,11 @@ public class spawner : MonoBehaviour {
 	void Start () {
         scroll_speed = scroll_speed_default;
 	}
+
+    public void BumpDifficulty()
+    {
+        time_between_spawn *= difficulty_change;
+    }
 	
 	// Update is called once per frame
 	void Update () {
