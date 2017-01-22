@@ -80,7 +80,7 @@ public class MusicController : MonoBehaviour
 
         mx.setParameterValue("DrumFader", 1);
         mx.setParameterValue("PadFader", 1);
-        mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed);
+        mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
 
 
         if (Input.GetMouseButtonDown(0))
