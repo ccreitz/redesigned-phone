@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundScroller : MonoBehaviour {
+public class BackgroundScroller : MonoBehaviour
+{
     public GameObject spriteObjTemplate;
     public Sprite[] sprites;
     public float scroll_speed_default;
@@ -16,7 +17,10 @@ public class BackgroundScroller : MonoBehaviour {
     private float scaledSpriteWidth;
     private int lastSpriteIndex = 0;
 
-    void Start () {
+    public GameObject last_sprite;
+
+    void Start()
+    {
         spriteWidth = sprites[0].bounds.size.x;
         spriteHeight = sprites[0].bounds.size.y;
 
@@ -25,20 +29,22 @@ public class BackgroundScroller : MonoBehaviour {
         spriteScale = worldScreenHeight / spriteHeight;
         scaledSpriteWidth = spriteWidth * spriteScale;
 
+        SpawnBackground((worldScreenWidth * 0.5f) + (scaledSpriteWidth * -2.5f));
         SpawnBackground((worldScreenWidth * 0.5f) + (scaledSpriteWidth * -1.5f));
-        SpawnBackground((worldScreenWidth * 0.5f) + (scaledSpriteWidth * -0.5f));
+        last_sprite = SpawnBackground((worldScreenWidth * 0.5f) + (scaledSpriteWidth * -0.5f));
     }
 
-    void Update () {
+    void Update()
+    {
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child == transform)
             {
                 continue;
             }
-            if (child.position.x < (worldScreenWidth * 0.5f) - (scaledSpriteWidth * 0.5f) && transform.childCount <= 2)
+            if (child.position.x < (worldScreenWidth * 0.5f) - (scaledSpriteWidth * 0.5f) && transform.childCount <= 3)
             {
-                SpawnBackground((worldScreenWidth * 0.5f) + (scaledSpriteWidth * 0.5f));
+                last_sprite = SpawnBackground(last_sprite.transform.position.x + scaledSpriteWidth);
             }
             else if (child.position.x < (worldScreenWidth * -0.5f) + (scaledSpriteWidth * -0.5f))
             {
@@ -51,11 +57,11 @@ public class BackgroundScroller : MonoBehaviour {
             {
                 continue;
             }
-            child.position += new Vector3(parallaxSpeed * (scroll_speed_default - WaveDetector.Instance.Speed), 0.0f, 0.0f) * Time.deltaTime;
+            child.position += new Vector3(parallaxSpeed * (scroll_speed_default - WaveDetector.Instance.Speed * WaveDetector.Instance.speedFactor), 0.0f, 0.0f) * Time.deltaTime;
         }
     }
 
-    void SpawnBackground(float xPos)
+    GameObject SpawnBackground(float xPos)
     {
         GameObject newObj = Instantiate<GameObject>(spriteObjTemplate, new Vector3(xPos, transform.position.y, transform.position.z), new Quaternion(), transform);
         newObj.GetComponent<SpriteRenderer>().sprite = sprites[lastSpriteIndex];
@@ -65,5 +71,7 @@ public class BackgroundScroller : MonoBehaviour {
             lastSpriteIndex = 0;
         }
         newObj.transform.localScale = new Vector3(spriteScale, spriteScale, 1.0f);
+        return newObj;
     }
 }
+
