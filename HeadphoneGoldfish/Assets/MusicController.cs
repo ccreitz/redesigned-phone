@@ -19,6 +19,7 @@ public class MusicController : MonoBehaviour
         string x = "event:/MX";
 
         mx = FMODUnity.RuntimeManager.CreateInstance(x);
+        mx.setVolume(1.5f);
         mx.start();
         lastBeatTime = -1000;
 
