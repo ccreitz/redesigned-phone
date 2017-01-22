@@ -13,6 +13,11 @@ public class MusicController : MonoBehaviour
     public float powerupScoreTimeThreshold;
     private float lastMusTime;
     private float musFreq;
+    public float musFadeDur = 1;
+    private float lastMixA;
+    private float targetMixA;
+    private float lastMixB;
+    private float targetMixB;
 
     // Use this for initialization
     void Start()
@@ -29,7 +34,24 @@ public class MusicController : MonoBehaviour
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
         GetComponent<BoxCollider2D>().size = new Vector3(worldScreenWidth, worldScreenHeight);
 
-        musFreq = UnityEngine.Random.Range(4, 10);
+        musFreq = UnityEngine.Random.Range(2, 4);
+        Debug.Log("Chose next switch in seconds " + musFreq.ToString());
+        if (UnityEngine.Random.value < 0.5)
+        {
+            targetMixA = UnityEngine.Random.value;
+            targetMixB = 1;
+        }
+        else
+        {
+            targetMixB = UnityEngine.Random.value;
+            targetMixA = 1;
+        }
+        lastMixA = targetMixA;
+        lastMixB = targetMixB;
+        mx.setParameterValue("DrumFader", targetMixA);
+        mx.setParameterValue("PadFader", targetMixB);
+        mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
+        lastMusTime = Time.time;
     }
 
     private FMOD.RESULT FmodCallback(FMOD.Studio.EVENT_CALLBACK_TYPE type, IntPtr eventInstance, IntPtr parameters)
@@ -95,16 +117,35 @@ public class MusicController : MonoBehaviour
         
         if (elapsed > musFreq)
         {
-            lastMusTime = Time.time;
-            musFreq = UnityEngine.Random.Range(4, 10);
-            float mix = UnityEngine.Random.value;
-            mx.setParameterValue("DrumFader", mix);
-            mx.setParameterValue("PadFader", 1-mix);
-            mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
+            if (elapsed > musFreq + musFadeDur)
+            {
+                Debug.Log("Switching to next phase");
+                lastMusTime = Time.time;
+                musFreq = UnityEngine.Random.Range(2, 4);
+                Debug.Log("Chose next switch in seconds " + musFreq.ToString());
+                lastMixA = targetMixA;
+                lastMixB = targetMixB;
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    targetMixA = UnityEngine.Random.value;
+                    targetMixB = 1;
+                }
+                else
+                {
+                    targetMixB = UnityEngine.Random.value;
+                    targetMixA = 1;
+                }
+            }
+            else
+            {
+                float mixA = Mathf.Lerp(lastMixA, targetMixA, (elapsed - musFreq) / musFadeDur);
+                float mixB = Mathf.Lerp(lastMixB, targetMixB, (elapsed - musFreq) / musFadeDur);
+                Debug.Log("Current mixA: " + mixA.ToString() + " mixB: " + mixB.ToString());
+                mx.setParameterValue("DrumFader", mixA);
+                mx.setParameterValue("PadFader", mixB);
+                mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
+            }
         }
-
-        
-
 
         if (Input.GetMouseButtonDown(0))
         {
