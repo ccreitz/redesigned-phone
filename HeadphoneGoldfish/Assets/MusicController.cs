@@ -48,17 +48,28 @@ public class MusicController : MonoBehaviour
     {
         mx.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
-    
+
+    private void OnGUI()
+    {
+        var myLog = GUI.TextArea(new Rect(50, 10, 50, 20), WaveDetector.Instance.Smoothspeed.ToString("F2"));
+    }
     void Update()
     {
         mx.setCallback(FmodCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
-        if (lastSpeed != WaveDetector.Instance.Speed)
+        /*if (lastSpeed != WaveDetector.Instance.Speed)
         {
             Debug.Log("Changing from " + lastSpeed + " to " + WaveDetector.Instance.Speed);
             lastSpeed = WaveDetector.Instance.Speed;
             mx.setParameterValue("DrumFader", 1);
-            mx.setParameterValue("SpeedFader", WaveDetector.Instance.Speed);
-        }
+            mx.setParameterValue("PadFader", 1);
+            mx.setParameterValue("SpeedFader", WaveDetector.Instance.Speed + 1);
+            
+        }*/
+
+        mx.setParameterValue("DrumFader", 1);
+        mx.setParameterValue("PadFader", 1);
+        mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed);
+
 
         if (Input.GetMouseButtonDown(0))
         {
