@@ -11,6 +11,8 @@ public class MusicController : MonoBehaviour
     public float lastBeatTime;
     public float lastClickTime;
     public float powerupScoreTimeThreshold;
+    private float lastMusTime;
+    private float musFreq;
 
     // Use this for initialization
     void Start()
@@ -26,6 +28,8 @@ public class MusicController : MonoBehaviour
         float worldScreenHeight = Camera.main.orthographicSize * 2.0f;
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
         GetComponent<BoxCollider2D>().size = new Vector3(worldScreenWidth, worldScreenHeight);
+
+        musFreq = UnityEngine.Random.Range(4, 10);
     }
 
     private FMOD.RESULT FmodCallback(FMOD.Studio.EVENT_CALLBACK_TYPE type, IntPtr eventInstance, IntPtr parameters)
@@ -87,10 +91,19 @@ public class MusicController : MonoBehaviour
             mx.setParameterValue("SpeedFader", WaveDetector.Instance.Speed + 1);
             
         }*/
+        float elapsed = Time.time - lastMusTime;
+        
+        if (elapsed > musFreq)
+        {
+            lastMusTime = Time.time;
+            musFreq = UnityEngine.Random.Range(4, 10);
+            float mix = UnityEngine.Random.value;
+            mx.setParameterValue("DrumFader", mix);
+            mx.setParameterValue("PadFader", 1-mix);
+            mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
+        }
 
-        mx.setParameterValue("DrumFader", 1);
-        mx.setParameterValue("PadFader", 1);
-        mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
+        
 
 
         if (Input.GetMouseButtonDown(0))
@@ -170,6 +183,7 @@ public class MusicController : MonoBehaviour
             Collider2D otherCollider = pwr.GetComponent<Collider2D>();
             if (otherCollider.bounds.Intersects(myCollider.bounds))
             {
+                GetComponent<AudioSource>().Play();
                 Destroy(pwr.gameObject);
                 Debug.Log("Got powerup");
                 lastBeatTime = -1000;
