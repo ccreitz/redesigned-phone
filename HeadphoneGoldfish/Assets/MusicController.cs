@@ -120,6 +120,7 @@ public class MusicController : MonoBehaviour
             Collider2D otherCollider = pwr.GetComponent<Collider2D>();
             if (otherCollider.bounds.Intersects(myCollider.bounds))
             {
+                GetComponent<AudioSource>().Play();
                 Destroy(pwr.gameObject);
                 Debug.Log("Got powerup");
                 lastBeatTime = -1000;
