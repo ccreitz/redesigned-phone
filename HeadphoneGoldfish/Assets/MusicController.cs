@@ -53,6 +53,17 @@ public class MusicController : MonoBehaviour
     {
         var myLog = GUI.TextArea(new Rect(50, 10, 50, 20), WaveDetector.Instance.Smoothspeed.ToString("F2"));
     }
+
+    private void OnEnable()
+    {
+        mx.setPaused(false);
+    }
+
+    private void OnDisable()
+    {
+        mx.setPaused(true);
+    }
+
     void Update()
     {
         mx.setCallback(FmodCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);

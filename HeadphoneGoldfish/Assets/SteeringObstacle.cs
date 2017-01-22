@@ -12,8 +12,9 @@ public class SteeringObstacle : ObstacleCommon {
 
     Rigidbody2D rigid_body;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    override protected void Start () {
+        base.Start();
         centerY = Random.Range(-screenHeight / 2, screenHeight / 2);
         startTime = Random.Range(0, maxPhaseOffset) + Time.time;
 
