@@ -60,6 +60,7 @@ public class FishGameController : MonoBehaviour {
     {
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
         WaveDetector.Instance.gameObject.SetActive(false);
+        GameObject.FindGameObjectWithTag("MusicController").SetActive(false);
         gameOverStuff.gameObject.SetActive(true);
         if (score > PlayerPrefs.GetInt("score", 0))
         {

@@ -48,7 +48,17 @@ public class MusicController : MonoBehaviour
     {
         mx.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
-    
+
+    private void OnEnable()
+    {
+        mx.setPaused(false);
+    }
+
+    private void OnDisable()
+    {
+        mx.setPaused(true);
+    }
+
     void Update()
     {
         mx.setCallback(FmodCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);

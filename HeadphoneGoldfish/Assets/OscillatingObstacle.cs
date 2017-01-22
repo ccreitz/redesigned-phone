@@ -11,8 +11,9 @@ public class OscillatingObstacle : ObstacleCommon {
     public float oscillationSpeed = 4;
 
     // Use this for initialization
-    void Start()
+    override protected void Start()
     {
+        base.Start();
         centerY = Random.Range(-screenHeight / 2, screenHeight / 2);
         startTime = Random.Range(0, maxPhaseOffset) + Time.time;
     }
