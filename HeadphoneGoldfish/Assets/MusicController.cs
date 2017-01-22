@@ -164,6 +164,56 @@ public class MusicController : MonoBehaviour
                 }
             }
         }
+
+        // Eel obstacle music
+
+        GameObject[] segs = GameObject.FindGameObjectsWithTag("Scoring");
+        //        Debug.Log(segs.Length);
+        fadeObstacleMusic(segs, "Eel(Clone)", "EelFader");
+        fadeObstacleMusic(segs, "Seaweed(Clone)", "SeaweedFader");
+        fadeObstacleMusic(segs, "FishHook(Clone)", "HookFader");
+        fadeObstacleMusic(segs, "Jellyfish(Clone)", "JellyfishFader");
+
+
+    }
+
+    void fadeObstacleMusic(GameObject[] all_segs, string obstacle_name, string fader_name)
+    {
+        List<GameObject> segments = new List<GameObject>();
+
+        foreach (GameObject segment in all_segs)
+        {
+            //Debug.Log(segment.transform.childCount);
+            Transform obstacle = segment.transform.GetChild(0);
+            if (obstacle.name == obstacle_name)
+            {
+                segments.Add(segment);
+            }
+        }
+
+        float distance = getDistanceToClosest(segments);
+        //Debug.Log("Distance to eel: " + distance);
+        if (distance < 10)
+        {
+            mx.setParameterValue(fader_name, 1.5f - distance / 10 + 0.5f);
+        }
+        else
+        {
+            mx.setParameterValue(fader_name, 0);
+        }
+    }
+
+    float getDistanceToClosest(List<GameObject> segments)
+    {
+        float min = float.MaxValue;
+        foreach (GameObject seg in segments) {
+            float dist = Vector3.Distance(Vector3.zero, seg.transform.position);
+            if (dist < min)
+            {
+                min = dist;
+            }
+        }
+        return min;
     }
 
     void GotPowerup()
