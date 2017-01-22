@@ -6,6 +6,7 @@ public class FishCharacter : MonoBehaviour {
     public float invTime;
     public Color invColor;
     private float lastInv;
+    public float blinkSpeed;
 
     // Use this for initialization
     void Start () {
@@ -14,7 +15,7 @@ public class FishCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GetComponent<SpriteRenderer>().color = isInv() ? invColor : Color.white;
+        GetComponent<SpriteRenderer>().color = (isInv() && ((Time.time%blinkSpeed) < blinkSpeed/2)) ? invColor : Color.white;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
