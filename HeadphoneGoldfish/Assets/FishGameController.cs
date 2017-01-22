@@ -3,35 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FishGameController : MonoBehaviour {
+    // Game stuff
     public int lives;
-    public int score;
+    public int score = 0;
+    public int mult = 1;
+    // UI stuff
     public UnityEngine.UI.Text livesCounter;
     public UnityEngine.UI.Text scoreCounter;
+    public UnityEngine.UI.Text multCounter;
+    private string livesFormat;
+    private string scoreFormat;
+    private string multFormat;
     public Transform gameOverStuff;
 
     void Start () {
+        livesFormat = livesCounter.text;
+        scoreFormat = scoreCounter.text;
+        multFormat = multCounter.text;
         UpdateUI();
 	}
 	
-	void Update () {
-	}
-
     public void Damaged()
     {
-        lives--;
-        if (lives < 0)
+        if (lives <= 0)
         {
             GameOver();
         }
         else
         {
+            mult = 1;
+            lives--;
             UpdateUI();
         }
     }
 
     public void AddScore()
     {
-        score++;
+        score += mult;
+        UpdateUI();
+    }
+
+    public void AddMult()
+    {
+        mult++;
+        UpdateUI();
+    }
+
+    public void SubMult()
+    {
+        mult--;
+        mult = mult > 1 ? mult : 1;
         UpdateUI();
     }
 
@@ -48,7 +69,8 @@ public class FishGameController : MonoBehaviour {
 
     void UpdateUI()
     {
-        livesCounter.text = lives.ToString();
-        scoreCounter.text = score.ToString();
+        livesCounter.text = string.Format(livesFormat, lives);
+        scoreCounter.text = string.Format(scoreFormat, score);
+        multCounter.text = string.Format(multFormat, mult);
     }
 }

@@ -7,14 +7,25 @@ public class segment : MonoBehaviour
     public static float speed;
     public float clip_threshold;
     private bool is_out_of_bounds;
+    public float powerupChance;
 
     public Transform[] obstacles;
+    public Transform powerup;
 
     // Use this for initialization
     void Start()
     {
         is_out_of_bounds = false;
-        Instantiate(obstacles[(int)(Random.value * obstacles.Length)], transform, false);
+        Transform toSpawn;
+        if (Random.value < powerupChance)
+        {
+            toSpawn = powerup;
+        }
+        else
+        {
+            toSpawn = obstacles[(int)(Random.value * obstacles.Length)];
+        }
+        Instantiate(toSpawn, transform, false);
     }
 
     // Update is called once per frame
