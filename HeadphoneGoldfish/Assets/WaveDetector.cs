@@ -12,6 +12,9 @@ public class WaveDetector : MonoBehaviour
     public int memsize;
     public float[] buckets = new float[] { };
     private int speed;
+    private float currspeed;
+    private int targetspeed;
+    public float easefactor;
     public float speedDecayTime;
     private static WaveDetector instance;
 
@@ -42,7 +45,12 @@ public class WaveDetector : MonoBehaviour
 
     public int Speed
     {
-        get { return speed; }
+        get { return Mathf.RoundToInt(currspeed); }
+    }
+
+    public float Smoothspeed
+    {
+        get { return currspeed; }
     }
 
     public Tailstate State
@@ -52,17 +60,25 @@ public class WaveDetector : MonoBehaviour
     // Update is called once per frame
     void OnGUI()
     {
-        var myLog = GUI.TextArea(new Rect(10, 10, 50, 20), speed + " " + state.ToString());
+        //var myLog = GUI.TextArea(new Rect(10, 10, 50, 20), targetspeed + " " + state.ToString());
     }
     void Update()
     {
         float dx = Input.GetAxis("Mouse X");
         elapsed += Time.deltaTime;
+        if (targetspeed > currspeed && (targetspeed - currspeed) > (easefactor / 2) - .005F)
+        {
+            currspeed = currspeed + ((targetspeed - currspeed) * easefactor * Time.deltaTime);
+        }
+        else if (targetspeed < currspeed && (currspeed - targetspeed) > (easefactor / 2) - .005F)
+        {
+            currspeed = currspeed - ((currspeed - targetspeed) * easefactor * Time.deltaTime);
+        }
         if (elapsed > speedDecayTime)
         {
-            if (speed > 0)
+            if (targetspeed > 0)
             {
-                speed--;
+                targetspeed--;
             }
             elapsed = 0;
         }
@@ -113,7 +129,7 @@ public class WaveDetector : MonoBehaviour
         float average = sum / memsize;
         //Debug.Log("Average = " + average.ToString("F2") + " Sum = " + sum.ToString("F2") + " Memsize = " + memsize);
 
-        speed = quantizeByBucket(average);
+        targetspeed = quantizeByBucket(average);
         average = 0;
     }
 
