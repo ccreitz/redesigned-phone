@@ -7,6 +7,7 @@ public class FishGameController : MonoBehaviour {
     public int lives;
     public int score = 0;
     public int mult = 1;
+    private bool paused;
     // UI stuff
     public UnityEngine.UI.Text livesCounter;
     public UnityEngine.UI.Text scoreCounter;
@@ -15,11 +16,13 @@ public class FishGameController : MonoBehaviour {
     private string scoreFormat;
     private string multFormat;
     public Transform gameOverStuff;
+    public Transform pauseStuff;
 
     void Start () {
         livesFormat = livesCounter.text;
         scoreFormat = scoreCounter.text;
         multFormat = multCounter.text;
+        paused = false;
         UpdateUI();
 	}
 	
@@ -73,5 +76,43 @@ public class FishGameController : MonoBehaviour {
         livesCounter.text = string.Format(livesFormat, lives);
         scoreCounter.text = string.Format(scoreFormat, score);
         multCounter.text = string.Format(multFormat, mult);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!paused)
+            {
+                Pause();
+            }
+            else
+            {
+                Unpause();
+            }
+        }
+    }
+
+    public void Pause()
+    {
+        Debug.Log("Pause");
+        paused = true;
+        pauseStuff.gameObject.SetActive(true);
+        Time.timeScale = 0.0f;
+        GameObject.FindWithTag("MusicController").GetComponent<MusicController>().Pause();
+    }
+
+    public void Unpause()
+    {
+        Debug.Log("Unpause");
+        paused = false;
+        pauseStuff.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
+        GameObject.FindWithTag("MusicController").GetComponent<MusicController>().Unpause();
+    }
+
+    private void OnDestroy()
+    {
+        Time.timeScale = 1.0f;
     }
 }

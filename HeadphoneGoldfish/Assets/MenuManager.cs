@@ -15,4 +15,9 @@ public class MenuManager : MonoBehaviour {
     {
         SceneManager.LoadScene("endless_scroll");
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

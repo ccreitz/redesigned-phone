@@ -55,14 +55,24 @@ public class MusicController : MonoBehaviour
         //var myLog = GUI.TextArea(new Rect(50, 10, 50, 20), WaveDetector.Instance.Smoothspeed.ToString("F2"));
     }
 
+    public void Unpause()
+    {
+        if (mx != null) mx.setPaused(false);
+    }
+
     private void OnEnable()
     {
-        mx.setPaused(false);
+        Unpause();
+    }
+
+    public void Pause()
+    {
+        if (mx != null) mx.setPaused(true);
     }
 
     private void OnDisable()
     {
-        mx.setPaused(true);
+        Pause();
     }
 
     void Update()
