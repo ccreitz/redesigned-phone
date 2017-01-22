@@ -34,7 +34,7 @@ public class MusicController : MonoBehaviour
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
         GetComponent<BoxCollider2D>().size = new Vector3(worldScreenWidth, worldScreenHeight);
 
-        musFreq = UnityEngine.Random.Range(2, 4);
+        musFreq = UnityEngine.Random.Range(4, 10);
         Debug.Log("Chose next switch in seconds " + musFreq.ToString());
         if (UnityEngine.Random.value < 0.5)
         {
@@ -121,7 +121,7 @@ public class MusicController : MonoBehaviour
             {
                 Debug.Log("Switching to next phase");
                 lastMusTime = Time.time;
-                musFreq = UnityEngine.Random.Range(2, 4);
+                musFreq = UnityEngine.Random.Range(4, 10);
                 Debug.Log("Chose next switch in seconds " + musFreq.ToString());
                 lastMixA = targetMixA;
                 lastMixB = targetMixB;
@@ -140,7 +140,7 @@ public class MusicController : MonoBehaviour
             {
                 float mixA = Mathf.Lerp(lastMixA, targetMixA, (elapsed - musFreq) / musFadeDur);
                 float mixB = Mathf.Lerp(lastMixB, targetMixB, (elapsed - musFreq) / musFadeDur);
-                Debug.Log("Current mixA: " + mixA.ToString() + " mixB: " + mixB.ToString());
+                //Debug.Log("Current mixA: " + mixA.ToString() + " mixB: " + mixB.ToString());
                 mx.setParameterValue("DrumFader", mixA);
                 mx.setParameterValue("PadFader", mixB);
                 mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
@@ -184,7 +184,19 @@ public class MusicController : MonoBehaviour
         foreach (GameObject segment in all_segs)
         {
             //Debug.Log(segment.transform.childCount);
+            if (segment == null || segment.transform == null)
+            {
+                continue;
+            }
+            if (segment.transform.childCount == 0)
+            {
+                continue;
+            }
             Transform obstacle = segment.transform.GetChild(0);
+            if (obstacle == null)
+            {
+                continue;
+            }
             if (obstacle.name == obstacle_name)
             {
                 segments.Add(segment);
@@ -207,6 +219,10 @@ public class MusicController : MonoBehaviour
     {
         float min = float.MaxValue;
         foreach (GameObject seg in segments) {
+            if (seg == null)
+            {
+                continue;
+            }
             float dist = Vector3.Distance(Vector3.zero, seg.transform.position);
             if (dist < min)
             {
