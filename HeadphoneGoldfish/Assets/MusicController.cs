@@ -66,7 +66,8 @@ public class MusicController : MonoBehaviour
         {
             Debug.Log("Changing from " + lastSpeed + " to " + WaveDetector.Instance.Speed);
             lastSpeed = WaveDetector.Instance.Speed;
-            mx.setParameterValue("Speed", WaveDetector.Instance.Speed);
+            mx.setParameterValue("DrumFader", 1);
+            mx.setParameterValue("SpeedFader", WaveDetector.Instance.Speed);
         }
 
         if (Input.GetMouseButtonDown(0))
