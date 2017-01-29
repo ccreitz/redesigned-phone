@@ -11,6 +11,8 @@ public class FishCharacter : MonoBehaviour {
     // Use this for initialization
     void Start () {
         lastInv = Time.time - invTime - 1;
+
+		transform.position = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width*0.1f, Screen.height*0.5f, 10));
 	}
 	
 	// Update is called once per frame
