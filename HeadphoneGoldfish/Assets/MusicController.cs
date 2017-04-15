@@ -140,8 +140,8 @@ public class MusicController : MonoBehaviour
             {
                 float mixA = Mathf.Lerp(lastMixA, targetMixA, (elapsed - musFreq) / musFadeDur);
                 float mixB = Mathf.Lerp(lastMixB, targetMixB, (elapsed - musFreq) / musFadeDur);
-                //Debug.Log("Current mixA: " + mixA.ToString() + " mixB: " + mixB.ToString());
-                mx.setParameterValue("DrumFader", mixA);
+                Debug.Log("Current mixA: " + mixA.ToString() + " mixB: " + mixB.ToString());
+                mx.setParameterValue("DrumFader", Mathf.Max(mixA, 0.1f));
                 mx.setParameterValue("PadFader", mixB);
                 mx.setParameterValue("SpeedFader", WaveDetector.Instance.Smoothspeed + 1);
             }
