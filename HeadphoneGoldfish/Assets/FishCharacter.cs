@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FishCharacter : MonoBehaviour {
+	public GameObject fishDeath;
+	public Animation deathAnim;
+	public Animation headphoneAnim;
     public float invTime;
     public Color invColor;
     private float lastInv;
+	private bool isDying;
     public float blinkSpeed;
 
     // Use this for initialization
     void Start () {
         lastInv = Time.time - invTime - 1;
-
+		isDying = false;
 		transform.position = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width*0.1f, Screen.height*0.5f, 10));
 	}
 	
@@ -41,4 +45,25 @@ public class FishCharacter : MonoBehaviour {
     {
         return Time.time - lastInv < invTime;
     }
+
+	public void die() {
+		isDying = true;
+		SpriteRenderer renderer = (SpriteRenderer) this.gameObject.GetComponent (typeof(SpriteRenderer));
+		renderer.enabled = false;
+		BoxCollider2D collider = (BoxCollider2D) this.gameObject.GetComponent (typeof(BoxCollider2D));
+		collider.enabled = false;
+
+		fishDeath.transform.position = this.transform.position;
+		fishDeath.SetActive (true);
+		deathAnim.Play();
+		headphoneAnim.Play();
+	}
+
+	public bool isDead() {
+		if (deathAnim != null) {
+			return !deathAnim.isPlaying && isDying;
+		} else {
+			return false;
+		}
+	}
 }
