@@ -19,9 +19,14 @@ public class MusicController : MonoBehaviour
     private float lastMixB;
     private float targetMixB;
 
+	public AudioClip main_sound;
+	public AudioClip death_sound;
+
     // Use this for initialization
     void Start()
     {
+
+
         //var studio = new FMODUnity.RuntimeManager();
 //        string x = "event:/MX";
 //
