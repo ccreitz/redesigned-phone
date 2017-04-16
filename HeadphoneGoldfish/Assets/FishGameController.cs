@@ -11,6 +11,8 @@ public class FishGameController : MonoBehaviour {
     public UnityEngine.UI.Text attemptsCounter;
     public UnityEngine.UI.Text scoreCounter;
     public UnityEngine.UI.Text multCounter;
+    public UnityEngine.UI.Text highScore1;
+    public UnityEngine.UI.Text highScore2;
     private string attemptsFormat;
     private string scoreFormat;
     private string multFormat;
@@ -57,12 +59,17 @@ public class FishGameController : MonoBehaviour {
         GameObject.FindGameObjectWithTag("MusicController").SetActive(false);
         gameOverStuff.gameObject.SetActive(true);
         attempts = PlayerPrefs.GetInt("attempts");
-        Debug.Log("attempts" + attempts);
+        Debug.Log("score" + PlayerPrefs.GetInt("score", score));
         attempts++;
         PlayerPrefs.SetInt("attempts", attempts);
         if (score > PlayerPrefs.GetInt("score", 0))
         {
             PlayerPrefs.SetInt("score", score);
+            highScore1.text = PlayerPrefs.GetInt("score", score).ToString();
+        }
+        else
+        {
+            highScore1.text = PlayerPrefs.GetInt("score", score).ToString();
         }
     }
 
@@ -90,7 +97,18 @@ public class FishGameController : MonoBehaviour {
 
     public void Pause()
     {
+        Debug.Log(PlayerPrefs.GetInt("score"));
         Debug.Log("Pause");
+        if (score > PlayerPrefs.GetInt("score", 0))
+        {
+            PlayerPrefs.SetInt("score", score);
+            highScore2.text = PlayerPrefs.GetInt("score", score).ToString();
+        }
+        else
+        {
+            highScore2.text = PlayerPrefs.GetInt("score", score).ToString();
+        }
+        Debug.Log(highScore2.text);
         paused = true;
         pauseStuff.gameObject.SetActive(true);
         Time.timeScale = 0.0f;
