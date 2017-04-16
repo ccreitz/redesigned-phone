@@ -7,6 +7,7 @@ public class FishGameController : MonoBehaviour {
     public int score = 0;
     public int mult = 1;
     private bool paused;
+	private bool gameOver = false;
     // UI stuff
     public UnityEngine.UI.Text attemptsCounter;
     public UnityEngine.UI.Text scoreCounter;
@@ -24,12 +25,15 @@ public class FishGameController : MonoBehaviour {
         scoreFormat = scoreCounter.text;
         multFormat = multCounter.text;
         paused = false;
+		gameOver = false;
         UpdateUI();
 	}
 	
     public void Damaged()
     {
-        GameOver();
+		FishCharacter character = (FishCharacter) GameObject.FindGameObjectWithTag ("Player").GetComponent (typeof(FishCharacter));
+		character.die ();
+		gameOver = true;
     }
 
     public void AddScore()
@@ -55,7 +59,7 @@ public class FishGameController : MonoBehaviour {
     {
         int attempts = 0;
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
-        WaveDetector.Instance.gameObject.SetActive(false);
+		WaveDetector.Instance.gameObject.SetActive(false);
         GameObject.FindGameObjectWithTag("MusicController").SetActive(false);
         gameOverStuff.gameObject.SetActive(true);
         attempts = PlayerPrefs.GetInt("attempts");
@@ -93,6 +97,18 @@ public class FishGameController : MonoBehaviour {
                 Unpause();
             }
         }
+		if (!paused) {
+			GameObject player = GameObject.FindGameObjectWithTag ("Player");
+			if (player != null) {
+				
+				FishCharacter character = player.transform.GetComponent<FishCharacter> ();
+				if (character != null) {
+					if (character.isDead ()) {
+						GameOver ();
+					}
+				}
+			}
+		}
     }
 
     public void Pause()
