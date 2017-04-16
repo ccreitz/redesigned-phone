@@ -28,8 +28,12 @@ public class FishCharacter : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Damaging"))
         {
-            lastInv = Time.time;
             GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().Damaged();
+        }
+        if(collision.gameObject.CompareTag("Powerup"))
+        {
+            lastInv = Time.time;
+            GameObject.FindGameObjectWithTag("MusicController").GetComponent<MusicController>().GotPowerup();
         }
     }
 
@@ -41,7 +45,7 @@ public class FishCharacter : MonoBehaviour {
         }
     }
 
-    private bool isInv()
+    public bool isInv()
     {
         return Time.time - lastInv < invTime;
     }

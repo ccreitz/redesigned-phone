@@ -232,23 +232,25 @@ public class MusicController : MonoBehaviour
         return min;
     }
 
-    void GotPowerup()
+    public void GotPowerup()
     {
-        Collider2D myCollider = GetComponent<Collider2D>();
+        Debug.Log("GETS HERE");
+        // Collider2D myCollider = GetComponent<Collider2D>();
         foreach (Powerup pwr in GameObject.FindObjectsOfType<Powerup>())
         {
-            Collider2D otherCollider = pwr.GetComponent<Collider2D>();
-            if (otherCollider.bounds.Intersects(myCollider.bounds))
-            {
+        //     Collider2D otherCollider = pwr.GetComponent<Collider2D>();
+        //     if (otherCollider.bounds.Intersects(myCollider.bounds))
+        //     {
                 GetComponent<AudioSource>().Play();
                 Destroy(pwr.gameObject);
                 Debug.Log("Got powerup");
-                lastBeatTime = -1000;
-                lastClickTime = -1000;
+                // lastBeatTime = -1000;
+                // lastClickTime = -1000;
+                
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().AddMult();
                 GameObject.Find("SpawnerObject").GetComponent<spawner>().BumpDifficulty();
                 break;
-            }
+        //     }
         }
     }
 }

@@ -31,9 +31,12 @@ public class FishGameController : MonoBehaviour {
 	
     public void Damaged()
     {
-		FishCharacter character = (FishCharacter) GameObject.FindGameObjectWithTag ("Player").GetComponent (typeof(FishCharacter));
-		character.die ();
-		gameOver = true;
+        FishCharacter character = (FishCharacter) GameObject.FindGameObjectWithTag ("Player").GetComponent (typeof(FishCharacter));
+        if (!character.isInv())
+        {
+    		character.die ();
+    		gameOver = true;
+        }
     }
 
     public void AddScore()
