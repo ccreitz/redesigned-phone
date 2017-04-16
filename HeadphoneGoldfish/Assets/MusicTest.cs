@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MusicTest : MonoBehaviour {
     public float currspeed;
-    FMOD.Studio.EventInstance mx;
-    FMOD.Studio.ParameterInstance mxSpeed;
+//    FMOD.Studio.EventInstance mx;
+//    FMOD.Studio.ParameterInstance mxSpeed;
 
 	// Use this for initialization
 	void Start () {
@@ -14,17 +14,17 @@ public class MusicTest : MonoBehaviour {
         //studio.play
         // FMODUnity.RuntimeManager.PlayOneShot(x);
         
-        mx = FMODUnity.RuntimeManager.CreateInstance(x);
-        mx.getParameter("Speed", out mxSpeed);
-        mx.start();
-        mxSpeed.setValue(1F);
+//        mx = FMODUnity.RuntimeManager.CreateInstance(x);
+//        mx.getParameter("Speed", out mxSpeed);
+//        mx.start();
+//        mxSpeed.setValue(1F);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        var res = mx.setParameterValue("Speed", currspeed);
-        float x;
-        mxSpeed.getValue(out x);
+//        var res = mx.setParameterValue("Speed", currspeed);
+//        float x;
+//        mxSpeed.getValue(out x);
         //Debug.Log(x);		
 	}
 }
