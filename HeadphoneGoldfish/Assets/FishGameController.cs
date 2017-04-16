@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class FishGameController : MonoBehaviour {
     // Game stuff
-    public int lives;
     public int score = 0;
     public int mult = 1;
     private bool paused;
     // UI stuff
-    public UnityEngine.UI.Text livesCounter;
+    public UnityEngine.UI.Text attemptsCounter;
     public UnityEngine.UI.Text scoreCounter;
     public UnityEngine.UI.Text multCounter;
-    private string livesFormat;
+    private string attemptsFormat;
     private string scoreFormat;
     private string multFormat;
     public Transform gameOverStuff;
     public Transform pauseStuff;
 
     void Start () {
-        livesFormat = livesCounter.text;
+        attemptsFormat = attemptsCounter.text;
         scoreFormat = scoreCounter.text;
         multFormat = multCounter.text;
         paused = false;
@@ -28,16 +27,7 @@ public class FishGameController : MonoBehaviour {
 	
     public void Damaged()
     {
-        if (lives <= 0)
-        {
-            GameOver();
-        }
-        else
-        {
-            mult = 1;
-            lives--;
-            UpdateUI();
-        }
+        GameOver();
     }
 
     public void AddScore()
@@ -61,10 +51,15 @@ public class FishGameController : MonoBehaviour {
 
     void GameOver()
     {
+        int attempts = 0;
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
         WaveDetector.Instance.gameObject.SetActive(false);
         GameObject.FindGameObjectWithTag("MusicController").SetActive(false);
         gameOverStuff.gameObject.SetActive(true);
+        attempts = PlayerPrefs.GetInt("attempts");
+        Debug.Log("attempts" + attempts);
+        attempts++;
+        PlayerPrefs.SetInt("attempts", attempts);
         if (score > PlayerPrefs.GetInt("score", 0))
         {
             PlayerPrefs.SetInt("score", score);
@@ -73,7 +68,7 @@ public class FishGameController : MonoBehaviour {
 
     void UpdateUI()
     {
-        livesCounter.text = string.Format(livesFormat, lives);
+        attemptsCounter.text = string.Format(attemptsFormat, PlayerPrefs.GetInt("attempts", 0));
         scoreCounter.text = string.Format(scoreFormat, score);
         multCounter.text = string.Format(multFormat, mult);
     }
