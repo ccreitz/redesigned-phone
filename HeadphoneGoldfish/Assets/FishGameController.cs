@@ -36,6 +36,7 @@ public class FishGameController : MonoBehaviour {
         {
     		character.die ();
     		gameOver = true;
+			GameObject.FindWithTag("MusicController").GetComponent<MusicController>().Pause();
         }
     }
 
@@ -130,8 +131,7 @@ public class FishGameController : MonoBehaviour {
         Debug.Log(highScore2.text);
         paused = true;
         pauseStuff.gameObject.SetActive(true);
-        Time.timeScale = 0.0f;
-        GameObject.FindWithTag("MusicController").GetComponent<MusicController>().Pause();
+        Time.timeScale = 0.0f;        
     }
 
     public void Unpause()

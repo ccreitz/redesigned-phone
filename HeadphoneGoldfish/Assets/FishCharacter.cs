@@ -51,6 +51,8 @@ public class FishCharacter : MonoBehaviour {
     }
 
 	public void die() {
+		GetComponent<AudioSource> ().Play ();
+
 		isDying = true;
 		SpriteRenderer renderer = (SpriteRenderer) this.gameObject.GetComponent (typeof(SpriteRenderer));
 		renderer.enabled = false;

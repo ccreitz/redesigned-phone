@@ -19,13 +19,10 @@ public class MusicController : MonoBehaviour
     private float lastMixB;
     private float targetMixB;
 
-	public AudioClip main_sound;
-	public AudioClip death_sound;
-
     // Use this for initialization
     void Start()
     {
-
+		
 
         //var studio = new FMODUnity.RuntimeManager();
 //        string x = "event:/MX";
@@ -98,7 +95,11 @@ public class MusicController : MonoBehaviour
 
     public void Pause()
     {
-//        if (mx != null) mx.setPaused(true);
+		AudioSource[] audio_sources = GetComponents<AudioSource> ();
+		foreach(AudioSource audio in audio_sources) {
+			audio.Stop ();
+		}
+		// if (mx != null) mx.setPaused(true);
     }
 
     private void OnDisable()
