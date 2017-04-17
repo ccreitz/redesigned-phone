@@ -21,6 +21,11 @@ public class FishCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!isInv())
+        {
+            
+             GameObject.Find("PowerupGlasses").GetComponent<SpriteRenderer>().enabled = false;
+        }
         GetComponent<SpriteRenderer>().color = (isInv() && ((Time.time%blinkSpeed) < blinkSpeed/2)) ? invColor : Color.white;
     }
 
@@ -33,6 +38,7 @@ public class FishCharacter : MonoBehaviour {
         if(collision.gameObject.CompareTag("Powerup"))
         {
             lastInv = Time.time;
+            GameObject.Find("PowerupGlasses").GetComponent<SpriteRenderer>().enabled = true;
             GameObject.FindGameObjectWithTag("MusicController").GetComponent<MusicController>().GotPowerup();
         }
     }

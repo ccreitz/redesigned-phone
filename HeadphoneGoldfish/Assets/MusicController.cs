@@ -240,7 +240,6 @@ public class MusicController : MonoBehaviour
 
     public void GotPowerup()
     {
-        Debug.Log("GETS HERE");
         // Collider2D myCollider = GetComponent<Collider2D>();
         foreach (Powerup pwr in GameObject.FindObjectsOfType<Powerup>())
         {
