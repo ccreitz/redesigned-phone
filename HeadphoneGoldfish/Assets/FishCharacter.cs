@@ -23,8 +23,9 @@ public class FishCharacter : MonoBehaviour {
 	void Update () {
         if (!isInv())
         {
-            
-             GameObject.Find("PowerupGlasses").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("PowerupGlasses").GetComponent<HeadBobber>().enabled = false;
+            GameObject.Find("Character").GetComponent<SpriteRenderer>().enabled = true;
+            GameObject.Find("PowerupGlasses").GetComponent<SpriteRenderer>().enabled = false;
         }
         GetComponent<SpriteRenderer>().color = (isInv() && ((Time.time%blinkSpeed) < blinkSpeed/2)) ? invColor : Color.white;
     }
@@ -38,6 +39,8 @@ public class FishCharacter : MonoBehaviour {
         if(collision.gameObject.CompareTag("Powerup"))
         {
             lastInv = Time.time;
+            GameObject.Find("Character").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("PowerupGlasses").GetComponent<HeadBobber>().enabled = true;
             GameObject.Find("PowerupGlasses").GetComponent<SpriteRenderer>().enabled = true;
             GameObject.FindGameObjectWithTag("MusicController").GetComponent<MusicController>().GotPowerup();
         }
