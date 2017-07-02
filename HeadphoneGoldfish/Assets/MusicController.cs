@@ -256,7 +256,7 @@ public class MusicController : MonoBehaviour
                 // lastClickTime = -1000;
                 
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().AddMult();
-                GameObject.Find("SpawnerObject").GetComponent<spawner>().BumpDifficulty();
+                GameObject.Find("SpawnerObject").GetComponent<spawner>().PowerupBumpDifficulty();
                 break;
         //     }
         }

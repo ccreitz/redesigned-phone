@@ -8,6 +8,7 @@ public class spawner : MonoBehaviour {
     public float scroll_speed_default;
     public List<Transform> segments;
     public float difficulty_change;
+    public float powerup_difficulty_change;
     private float scroll_speed;
 
     private float last_spawn_time;
@@ -21,9 +22,14 @@ public class spawner : MonoBehaviour {
     {
         time_between_spawn *= difficulty_change;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void PowerupBumpDifficulty()
+    {
+        time_between_spawn *= powerup_difficulty_change;
+    }
+
+    // Update is called once per frame
+    void Update () {
         scroll_speed = scroll_speed_default - (WaveDetector.Instance.speedFactor * WaveDetector.Instance.Speed);
         float elapsed = (Time.time - last_spawn_time);
         if (elapsed > time_between_spawn/-scroll_speed) {

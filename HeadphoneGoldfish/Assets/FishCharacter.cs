@@ -56,6 +56,10 @@ public class FishCharacter : MonoBehaviour {
         if (collision.gameObject.CompareTag("Scoring"))
         {
             GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().AddScore();
+            if (GameObject.FindGameObjectWithTag("GameController").GetComponent<FishGameController>().score % 5 == 0)
+            {
+                GameObject.Find("SpawnerObject").GetComponent<spawner>().BumpDifficulty();
+            }
         }
     }
 
