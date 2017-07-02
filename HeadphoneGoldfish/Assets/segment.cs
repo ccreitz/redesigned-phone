@@ -17,7 +17,7 @@ public class segment : MonoBehaviour
     {
         is_out_of_bounds = false;
         Transform toSpawn;
-        if (Random.value < powerupChance)
+        if (Random.value < powerupChance && !GameObject.FindGameObjectWithTag("Player").GetComponent<FishCharacter>().isInv())
         {
             toSpawn = powerup;
         }
