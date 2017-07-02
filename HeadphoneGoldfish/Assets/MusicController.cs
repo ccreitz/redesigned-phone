@@ -22,8 +22,6 @@ public class MusicController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		
-
         //var studio = new FMODUnity.RuntimeManager();
 //        string x = "event:/MX";
 //
@@ -85,6 +83,10 @@ public class MusicController : MonoBehaviour
 
     public void Unpause()
     {
+		AudioSource[] audio_sources = GetComponents<AudioSource> ();
+		foreach(AudioSource audio in audio_sources) {
+			audio.UnPause ();
+		}
 //        if (mx != null) mx.setPaused(false);
     }
 
@@ -97,7 +99,7 @@ public class MusicController : MonoBehaviour
     {
 		AudioSource[] audio_sources = GetComponents<AudioSource> ();
 		foreach(AudioSource audio in audio_sources) {
-			audio.Stop ();
+			audio.Pause ();
 		}
 		// if (mx != null) mx.setPaused(true);
     }
@@ -240,6 +242,7 @@ public class MusicController : MonoBehaviour
 
     public void GotPowerup()
     {
+		Pause();
         // Collider2D myCollider = GetComponent<Collider2D>();
         foreach (Powerup pwr in GameObject.FindObjectsOfType<Powerup>())
         {
