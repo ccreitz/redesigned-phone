@@ -20,6 +20,7 @@ public class MouseControl : MonoBehaviour
             if (transform.position.y + WaveDetector.Instance.Smoothspeed * .25f * sensitivity * Time.deltaTime > 4f)
             {
                 transform.position += new Vector3(0, 0, 0);
+				WaveDetector.Instance.Smoothspeed = -0.5f;
             }
             else
             {
