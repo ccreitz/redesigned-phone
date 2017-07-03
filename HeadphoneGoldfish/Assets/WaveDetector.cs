@@ -51,6 +51,7 @@ public class WaveDetector : MonoBehaviour
     public float Smoothspeed
     {
         get { return currspeed; }
+		set { currspeed = value; }
     }
 
     public Tailstate State
