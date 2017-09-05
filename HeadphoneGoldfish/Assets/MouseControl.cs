@@ -5,31 +5,23 @@ using UnityEngine;
 public class MouseControl : MonoBehaviour
 {
     public float sensitivity;
+	private Rigidbody2D rigid_body;
 
     // Use this for initialization
     void Start()
     {
-
+		rigid_body = transform.GetComponent<Rigidbody2D> ();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (WaveDetector.Instance.Smoothspeed > 1 && transform.position.y + WaveDetector.Instance.Smoothspeed * .25f * sensitivity * Time.deltaTime < 4.5f)
-        {
-            if (transform.position.y + WaveDetector.Instance.Smoothspeed * .25f * sensitivity * Time.deltaTime > 4f)
-            {
-                transform.position += new Vector3(0, 0, 0);
-				WaveDetector.Instance.Smoothspeed = -0.5f;
-            }
-            else
-            {
-                transform.position += new Vector3(0, WaveDetector.Instance.Smoothspeed * .25f, 0) * sensitivity * Time.deltaTime;
-            }
-        }
-        else if (transform.position.y > -3.5f && transform.position.y < 4.0f)
-        {
-            transform.position += new Vector3(0, -.5f * sensitivity * Time.deltaTime, 0);
-        }
+		Vector3 curr_pos_in_viewport = Camera.main.WorldToViewportPoint (transform.position);
+		bool is_player_on_screen = 0 < curr_pos_in_viewport.x && curr_pos_in_viewport.x < 1 &&
+		                           0 < curr_pos_in_viewport.y && curr_pos_in_viewport.y < 1;
+
+		if (Input.GetMouseButtonDown (0) && is_player_on_screen) {
+			rigid_body.AddForce (Vector2.up*sensitivity, ForceMode2D.Impulse);
+		}
     }
 }

@@ -57,7 +57,7 @@ public class BackgroundScroller : MonoBehaviour
             {
                 continue;
             }
-            child.position += new Vector3(parallaxSpeed * (scroll_speed_default - WaveDetector.Instance.Speed * WaveDetector.Instance.speedFactor), 0.0f, 0.0f) * Time.deltaTime;
+			child.position += new Vector3 (parallaxSpeed * (scroll_speed_default - WaveDetector.Instance.Speed * WaveDetector.Instance.speedFactor), 0.0f, 0.0f) * Time.deltaTime;
         }
     }
 

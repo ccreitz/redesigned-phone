@@ -45,7 +45,7 @@ public class WaveDetector : MonoBehaviour
 
     public int Speed
     {
-        get { return Mathf.RoundToInt(currspeed); }
+		get { return Mathf.RoundToInt(currspeed); }
     }
 
     public float Smoothspeed
@@ -65,7 +65,7 @@ public class WaveDetector : MonoBehaviour
     }
     void Update()
     {
-        float dx = Input.GetAxis("Mouse X");
+		/*float dx = Input.GetAxis("Mouse X");
         elapsed += Time.deltaTime;
         if (targetspeed > currspeed && (targetspeed - currspeed) > (easefactor / 2) - .005F)
         {
@@ -115,7 +115,7 @@ public class WaveDetector : MonoBehaviour
         else
         {
             //No big enough input
-        }
+        }*/
     }
     private void Tailbeat(float elapsed)
     {
@@ -152,7 +152,7 @@ public class WaveDetector : MonoBehaviour
                 }
             }
         }
-        Debug.Log("x = " + x.ToString("F2") + " Retval = " + retval);
+        //Debug.Log("x = " + x.ToString("F2") + " Retval = " + retval);
         return retval;
     }
 }

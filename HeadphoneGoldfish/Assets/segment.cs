@@ -31,7 +31,7 @@ public class segment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(gameObject.GetComponentInParent<spawner>().GetScrollSpeed(), 0, 0) * Time.deltaTime;
+		transform.position += new Vector3(gameObject.GetComponentInParent<spawner>().GetScrollSpeed(), 0, 0) * Time.deltaTime;
 
         if (transform.position.x < clip_threshold)
         {
